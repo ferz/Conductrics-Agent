@@ -21,7 +21,7 @@ CHECK_ENV: {
 }
 
 if ($env_found) {
-    plan tests=>7;
+    plan tests=>10;
 }
 
 use_ok('Conductrics::Agent');
@@ -38,5 +38,13 @@ like($decision1, qr/giallo|rosso/ );
 my $decision2 = $agent->decide("12345678900", qw/rosso giallo/);
 ok($decision2, "decide()");
 like($decision2, qr/giallo|rosso/ );
+
+my $reward2 = $agent->reward('12345678900', 'goal-1', 1);
+ok($reward2, 'rewarded');
+
+my $expire2 = $agent->expire('12345678900');
+ok($expire2, "session2 expired");
+my $expire1 = $agent->expire('123456789');
+ok($expire1, "session1 expired");
 
 exit;

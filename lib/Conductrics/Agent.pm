@@ -84,8 +84,7 @@ sub reward {
     my ($self, $session, $goalCode, $value) = @_;
     $value = 1 unless (defined $value);
     my $uri = $self->baseUri->clone;
-    $uri->path_segments($self->ownerCode, $self->name);
-    $uri->query_param('goal'=>$goalCode);
+    $uri->path_segments($self->ownerCode, $self->name, 'goal', $goalCode);
     $self->sessionId($session);
     my $answer;
     eval {
