@@ -9,6 +9,16 @@
 
     I'll use this module for a new Catalyst model.
 
+    You have to set some env to execute t/02-real_test.t
+    You will find your data into Account/Keys and Users page.
+
+    Required env for the test:
+
+       Conductrics_apikey
+       Conductrics_ownerCode
+       Conductrics_agent_name
+
+
 ## SYNOPSIS
 
         use Conductrics::Agent;
