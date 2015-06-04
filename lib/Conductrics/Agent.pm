@@ -14,7 +14,7 @@ use Time::HiRes;
 
 require LWP::UserAgent;
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 $VERSION = eval $VERSION;
 
 sub build_uri { 
