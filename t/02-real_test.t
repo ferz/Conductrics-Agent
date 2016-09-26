@@ -5,6 +5,8 @@ use warnings;
 
 use Test::More;
 
+$ENV{Conductrics_agent_name}='Agent-1' unless (exists $ENV{Conductrics_agent_name});
+
 my $env_found;
 CHECK_ENV: {
     my @cvars = qw/ apikey ownerCode agent_name /;
@@ -31,20 +33,24 @@ my $agent = Conductrics::Agent->new(apiKey=>$ENV{Conductrics_apikey}, ownerCode=
 ok($agent);
 isa_ok($agent, "Conductrics::Agent");
 
-my $decision1 = $agent->decide("123456789", qw/rosso giallo/);
-ok($decision1, "decide()");
-like($decision1, qr/giallo|rosso/ );
-
-my $decision2 = $agent->decide("12345678900", qw/rosso giallo/);
-ok($decision2, "decide()");
-like($decision2, qr/giallo|rosso/ );
-
-my $reward2 = $agent->reward('12345678900', 'goal-1', 1);
-ok($reward2, 'rewarded');
-
-my $expire2 = $agent->expire('12345678900');
-ok($expire2, "session2 expired");
-my $expire1 = $agent->expire('123456789');
-ok($expire1, "session1 expired");
-
+#####
+my $client;
+SKIP: {
+    skip "tests of first release of this library", 7 unless($client);
+    my $decision1 = $agent->decide("first_sessionId", 'home','colour');
+    ok($decision1, "decide()");
+    like($decision1, qr/red|green/ );
+    
+    my $decision2 = $agent->decide("second_sessionId", qw/rosso giallo/);
+    ok($decision2, "decide()");
+    like($decision2, qr/giallo|rosso/ );
+    
+    my $reward2 = $agent->reward('12345678900', 'goal-1', 1);
+    ok($reward2, 'rewarded');
+    
+    my $expire2 = $agent->expire('12345678900');
+    ok($expire2, "session2 expired");
+    my $expire1 = $agent->expire('123456789');
+    ok($expire1, "session1 expired");
+}
 exit;

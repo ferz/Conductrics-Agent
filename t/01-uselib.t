@@ -13,4 +13,5 @@ ok($agent, "Agent created");
 isa_ok($agent, 'Conductrics::Agent');
 can_ok($agent, qw/decide reward expire/);
 
+
 exit;
